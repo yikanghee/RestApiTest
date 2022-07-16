@@ -1,7 +1,6 @@
 package com.example.Contoller;
 
-import com.example.DTO.ApiDto;
-import com.example.Service.ApiService;
+import com.example.DTO.LuckyDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,33 +12,32 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ApiController {
 
-    private final ApiService apiService;
+    LuckyDto luckyDto;
 
-    @GetMapping("/")
-    public ResponseEntity<String> apiTest(@RequestBody String test) {
+    @GetMapping("lucky")
+    public String test() {
 
-        log.info("값이 잘 찍히나?" + test);
+        int[] lotto = new int[6];
 
-        return ResponseEntity.ok().body("정상 작동합니다.");
-    }
-
-    @PostMapping("/apiPost")
-    public ResponseEntity<String> apiPost(@RequestBody ApiDto apiDto) {
-
-        log.info("값이 전달");
-        int res = apiService.ApiPost(apiDto);
-        log.info("값이 전달되냐?");
-
-        if (res == 1) {
-            return ResponseEntity.status(HttpStatus.OK).body("값이 잘 들어왔어");
+        for (int i = 0; i < 6; i++) {
+            int num = (int)(Math.random() * 45) + 1;
+            lotto[i] = num;
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("값이 잘 안들어왔어");
+
+        for (int j = 0; j < 6; j++) {
+            int num = lotto[j];
+            log.info(String.valueOf(num));
+        }
+
+//        luckyDto.setOne(lotto[0]);
+//        luckyDto.setTwo(lotto[1]);
+//        luckyDto.setThree(lotto[2]);
+//        luckyDto.setFour(lotto[3]);
+//        luckyDto.setFive(lotto[4]);
+//        luckyDto.setSix(lotto[5]);
+
+        return "성공";
     }
-
-    
-
-
-
 
     /*
     api의 기본 원칙
